@@ -9,10 +9,12 @@ export class RealEstateTransactionService {
     private readonly realEstateTransactionRepository: RealEstateTransactionRepository,
   ) {}
 
-  getRealEstateTransactions(variables: RealEstateTransactionVariables) {
-    validate(variables);
+  getRealEstateTransactions(
+    variables: Partial<RealEstateTransactionVariables>,
+  ) {
+    const validatedVariables = validate(variables);
 
-    const { year, prefectureCode, type } = variables;
+    const { year, prefectureCode, type } = validatedVariables;
     const estateTransactions = this.realEstateTransactionRepository.fetchAll();
 
     return estateTransactions

@@ -10,9 +10,9 @@ export class RealEstateTransactionsController {
 
   @Get('bar')
   getPrice(
-    @Query('year') year: number,
-    @Query('prefectureCode') prefectureCode: number,
-    @Query('type') type: number,
+    @Query('year') year?: number,
+    @Query('prefectureCode') prefectureCode?: number,
+    @Query('type') type?: number,
   ): RealEstateTransaction['data']['result'][] {
     return this.realEstateTransactionService.getRealEstateTransactions({
       year,
