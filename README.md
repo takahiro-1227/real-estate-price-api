@@ -12,6 +12,8 @@
 `http://localhost:3000/api/v1/townPlanning/estateTransaction/bar`  
 
 ### 指定可能クエリパラメータ（いずれも必須）  
+| キー | 内容 |
+| --- | --- |
 | year | 年度  ※ 2015年から2018年 |
 | prefectureCode | 都道府県コード ※ 関東のみ |
 | type | 用途地域  1：住宅地  2：商業地 | 
