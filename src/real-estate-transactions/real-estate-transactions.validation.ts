@@ -26,20 +26,32 @@ export const validate = ({
   year,
   prefectureCode,
   type,
-}: RealEstateTransactionVariables) => {
+}: Partial<RealEstateTransactionVariables>): RealEstateTransactionVariables => {
   const errorMessages = [];
 
-  if (!validYears.includes(year)) {
+  if (!year) {
+    errorMessages.push('年が指定されていません。');
+  }
+
+  if (!prefectureCode) {
+    errorMessages.push('都道府県コードが指定されていません。');
+  }
+
+  if (!type) {
+    errorMessages.push('用途地域コードが指定されていません。');
+  }
+
+  if (year && !validYears.includes(year)) {
     errorMessages.push(`無効な年です。有効な年：${validYears.join(', ')}`);
   }
 
-  if (!kantoPrefectureCodes.includes(prefectureCode)) {
+  if (prefectureCode && !kantoPrefectureCodes.includes(prefectureCode)) {
     errorMessages.push(
       `無効な都道府県コードです。有効な都道府県コード：${kantoPrefectureCodes.join(', ')}`,
     );
   }
 
-  if (!zoneTypes.includes(type)) {
+  if (type && !zoneTypes.includes(type)) {
     errorMessages.push(
       `無効な用途地域コードです。有効な用途地域コード：${zoneTypes.join(', ')}`,
     );
@@ -54,4 +66,22 @@ export const validate = ({
       HttpStatus.BAD_REQUEST,
     );
   }
+
+  // この前時点でパラメータ不足の場合はエラーになっているはずだが、
+  // 型推論のために再度チェックを行う
+  if (!year || !prefectureCode || !type) {
+    throw new HttpException(
+      {
+        status: HttpStatus.BAD_REQUEST,
+        messages: errorMessages,
+      },
+      HttpStatus.BAD_REQUEST,
+    );
+  }
+
+  return {
+    year,
+    prefectureCode,
+    type,
+  };
 };

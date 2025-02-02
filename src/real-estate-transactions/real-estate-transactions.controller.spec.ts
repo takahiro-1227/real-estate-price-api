@@ -49,4 +49,8 @@ describe('不動産取引価格API', () => {
   it('不正な用途地域コードならエラー', () => {
     expect(() => controller.getPrice(2015, 8, 3)).toThrow();
   });
+
+  it('パラメータが不足している場合はエラー', () => {
+    expect(() => controller.getPrice(2015, 8)).toThrow();
+  });
 });
