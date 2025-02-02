@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { RealEstateTransactionsController } from './real-estate-transactions.controller';
 import { RealEstateTransactionService } from './real-estate-transactions.service';
+import { RealEstateTransactionRepository } from './real-estate-transactions.repository';
 
 describe('不動産取引価格API', () => {
   let controller: RealEstateTransactionsController;
@@ -8,7 +9,13 @@ describe('不動産取引価格API', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [RealEstateTransactionsController],
-      providers: [RealEstateTransactionService],
+      providers: [
+        RealEstateTransactionService,
+        {
+          provide: RealEstateTransactionRepository,
+          useClass: RealEstateTransactionRepository,
+        },
+      ],
     }).compile();
 
     controller = module.get<RealEstateTransactionsController>(
