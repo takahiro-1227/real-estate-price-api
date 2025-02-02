@@ -20,3 +20,7 @@ export interface RealEstateTransactionVariables {
   prefectureCode: number;
   type: number;
 }
+
+export interface IRealEstateTransactionRepository {
+  fetchAll(): RealEstateTransaction[];
+}
